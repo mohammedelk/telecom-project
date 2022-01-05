@@ -11,7 +11,7 @@ class Node:
     def set_parent(self, parent):
         if not self.child_became_parent(parent):
             self.parent = parent
-            parent.add_child(self)
+            parent.__add_child(self)
 
     def get_parent(self):
         return self.parent
@@ -30,5 +30,6 @@ class Node:
 
         return False
 
-    def add_child(self, child):
+    # private methode
+    def __add_child(self, child):
         np.append(self.child, child)
