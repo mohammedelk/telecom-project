@@ -1,18 +1,17 @@
-import pandas as pd
-
-df = pd.read_csv('../../data/BD Routage 30 10 2021.csv')
-print(df.to_string())
+import numpy as np
 
 
 class Node:
-    def __init__(self, id, data):
-        self.id = id
-        self.data = data
+    def __init__(self, label):
+        self.label = label
+        self.data = {}
         self.parent = None
+        self.child = np.array([])
 
     def set_parent(self, parent):
         if not self.child_became_parent(parent):
             self.parent = parent
+            parent.add_child(self)
 
     def get_parent(self):
         return self.parent
@@ -30,3 +29,6 @@ class Node:
             return self.child_became_parent(parent.getparent())
 
         return False
+
+    def add_child(self, child):
+        np.append(self.child, child)
