@@ -8,6 +8,9 @@ class Node:
         self.parent = None
         self.child = np.array([])
 
+    def get_label(self):
+        return self.label
+
     def set_parent(self, parent):
         if not self.child_became_parent(parent):
             self.parent = parent
