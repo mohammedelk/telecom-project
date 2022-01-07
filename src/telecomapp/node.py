@@ -36,3 +36,4 @@ class Node:
     # private methode
     def __add_child(self, child):
         np.append(self.child, child)
+        pass
