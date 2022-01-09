@@ -1,38 +1,48 @@
 import pandas as pd
-import node
+import numpy as np
+from .node import Node
 
 
 class Net:
     def __init__(self, arr_tree):
         self.arr_tree = arr_tree
         self.nodes = {}
+        self.str_tree = ""
 
     # create nodes by batch array
     def get_nodes(self):
-        if self.nodes is None:
+        if self.nodes == {}:
             for s, f in self.arr_tree:
-                s_node = None
-                f_node = None
                 if not (s in self.nodes.keys()):
-                    s_node = node.Node(s)
+                    s_node = Node(s)
                     self.nodes[s] = s_node
                 if not (f in self.nodes.keys()):
-                    f_node = node.Node(s)
+                    f_node = Node(f)
                     self.nodes[f] = f_node
-                s_node.set_parent(f_node)
+                self.nodes[s].set_parent(self.nodes[f])
         return self.nodes
-
 
     # add node to net
     def connect_net(self):
         pass
 
 
+    def gen_json(self, tree_src):
+        self.str_tree += "{ " + " id:" + tree_src.get_label() + ", name:" + tree_src.get_label() + ", data:" + str(
+            tree_src.data) + ", children: [ \n"
+        for child in np.arange(0, len(tree_src.child)):
+
+            self.gen_json(tree_src.child[child])
+            if child < len(tree_src.child)-1:
+                self.str_tree += ", \n"
+
+        self.str_tree += " ] }"
+
+
 def csv_to_arr(csv_path):
-    #csv_path = '../../data/BD Routage 30 10 2021.csv'
     df = pd.read_csv(csv_path)
-    arr_tree = df[['Site', 'Farend']][0:200].to_numpy()
-    return arr_tree
+    arr_tree = df[['Site', 'Farend']].to_numpy()
+    return np.array(arr_tree)
 
 
 def arr_to_tree(arr):

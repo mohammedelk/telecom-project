@@ -11,13 +11,19 @@ class Node:
     def get_label(self):
         return self.label
 
+    def get_child(self):
+        return self.child
+
     def set_parent(self, parent):
         if True: #not self.child_became_parent(parent):
             self.parent = parent
-            parent.__add_child(self)
+            self.parent.__add_child(self)
 
     def get_parent(self):
         return self.parent
+
+    def get_data(self):
+        return self.data
 
     def has_parent(self):
         if self.parent is None:
@@ -35,4 +41,4 @@ class Node:
 
     # private methode
     def __add_child(self, child):
-        np.append(self.child, child)
+        self.child = np.append(self.child, child)
