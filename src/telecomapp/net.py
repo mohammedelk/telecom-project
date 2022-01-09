@@ -26,14 +26,12 @@ class Net:
     def connect_net(self):
         pass
 
-
     def gen_json(self, tree_src):
-        self.str_tree += "{ " + " id:" + tree_src.get_label() + ", name:" + tree_src.get_label() + ", data:" + str(
-            tree_src.data) + ", children: [ \n"
+        self.str_tree += "{ " + " id:" + "\"" + tree_src.get_label() + "\"" + ", name:" + "\"" + tree_src.get_label() + "\"" + ", data:" +  str(
+            tree_src.data) +  ", children: [ \n"
         for child in np.arange(0, len(tree_src.child)):
-
             self.gen_json(tree_src.child[child])
-            if child < len(tree_src.child)-1:
+            if child < len(tree_src.child) - 1:
                 self.str_tree += ", \n"
 
         self.str_tree += " ] }"
