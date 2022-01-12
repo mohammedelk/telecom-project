@@ -8,8 +8,8 @@ if __name__ == '__main__':
     my_net.gen_json(my_net.get_nodes()['FO'])
     # for i in np.arange(0, len(my_net.get_nodes()['FO'].get_child())):
     # print(my_net.get_nodes()['FO'].get_child()[i].get_label())
-    #my_net.gen_json(my_net.get_nodes()['FO'])
-    #print(my_net.str_tree)
+    # my_net.gen_json(my_net.get_nodes()['FO'])
+    # print(my_net.str_tree)
     file = open("copy.txt", "w")
     file.write(my_net.str_tree)
     file.close()
