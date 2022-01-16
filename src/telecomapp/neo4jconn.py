@@ -1,5 +1,6 @@
 # from https://towardsdatascience.com/neo4j-cypher-python-7a919a372be7
 from neo4j import GraphDatabase
+from net import csv_to_arr
 
 
 class Neo4jConnection:
@@ -36,5 +37,11 @@ class Neo4jConnection:
 if __name__ == "__main__":
     conn = Neo4jConnection("bolt://localhost:7687", "neo4j", "azeaze")
     #query = '''match (n) where n.nLabel='PY001' return id(n)'''
-    query = '''match (n) where n.nLabel="AGA001" create (a:Node{nLabel:"PY003"})-[:CHILD_OF]->(n)'''
-    print(conn.query(query, db='neo4j'))
+    data_arr=csv_to_arr('H:/workspace/python/telecom-project/data/BD Routage 30 10 2021.csv')
+    for destination ,source, in data_arr:
+        conn.query("merge (n1: Node{ nLabel :\""+destination+"\" })"
+        "merge (n2: Node{ nLabel :\""+source+"\" })"
+        "merge (n1)-[:CHILD_OF]->(n2)")
+
+    #query = "match (n) where n.nLabel= \"" + source + "\" create (a:Node{nLabel:\"" +destination+"\" })-[:CHILD_OF]->(n)"
+    #print(conn.query(query, db='neo4j'))

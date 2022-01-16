@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from .node import Node
-
+#from .node import Node
+from node import Node
 
 class Net:
     def __init__(self, arr_tree):
