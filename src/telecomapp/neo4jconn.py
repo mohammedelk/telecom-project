@@ -34,6 +34,18 @@ class Neo4jConnection:
         return response
 
 
+def create_db_from_csv(csv_path, conn):
+    data_arr = csv_to_arr(csv_path)
+    for n_destination, n_source, in data_arr:
+        conn.query("merge (n1: Node{ nLabel :\"" + n_destination + "\" })"
+        "merge (n2: Node{ nLabel :\"" + n_source + "\" })"
+        "merge (n1)-[:CHILD_OF]->(n2)")
+
+
+
+
+
+"""
 if __name__ == "__main__":
     conn = Neo4jConnection("bolt://localhost:7687", "neo4j", "azeaze")
     #query = '''match (n) where n.nLabel='PY001' return id(n)'''
@@ -45,3 +57,4 @@ if __name__ == "__main__":
 
     #query = "match (n) where n.nLabel= \"" + source + "\" create (a:Node{nLabel:\"" +destination+"\" })-[:CHILD_OF]->(n)"
     #print(conn.query(query, db='neo4j'))
+"""

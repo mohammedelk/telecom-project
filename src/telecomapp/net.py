@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
-#from .node import Node
+# from .node import Node
 from node import Node
+
 
 class Net:
     def __init__(self, arr_tree):
@@ -27,8 +28,8 @@ class Net:
         pass
 
     def gen_json(self, tree_src):
-        self.str_tree += "{ " + " id:" + "\"" + tree_src.get_label() + "\"" + ", name:" + "\"" + tree_src.get_label() + "\"" + ", data:" +  str(
-            tree_src.data) +  ", children: [ \n"
+        self.str_tree += "{ " + " id:" + "\"" + tree_src.get_label() + "\"" + ", name:" + "\"" + tree_src.get_label() + "\"" + ", data:" + str(
+            tree_src.data) + ", children: [ \n"
         for i in np.arange(0, len(tree_src.child)):
             self.gen_json(tree_src.child[i])
             if i < len(tree_src.child) - 1:
