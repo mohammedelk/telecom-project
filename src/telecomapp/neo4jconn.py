@@ -45,16 +45,15 @@ def create_db_from_csv(csv_path, conn):
 
 
 
-"""
+
 if __name__ == "__main__":
     conn = Neo4jConnection("bolt://localhost:7687", "neo4j", "azeaze")
     #query = '''match (n) where n.nLabel='PY001' return id(n)'''
-    data_arr=csv_to_arr('H:/workspace/python/telecom-project/data/BD Routage 30 10 2021.csv')
+    data_arr = csv_to_arr('H:/workspace/python/telecom-project/data/BD Routage 30 10 2021.csv')
     for destination ,source, in data_arr:
-        conn.query("merge (n1: Node{ nLabel :\""+destination+"\" })"
-        "merge (n2: Node{ nLabel :\""+source+"\" })"
+        conn.query("merge (n1: NetNode{ netLabel :\""+destination+"\" })"
+        "merge (n2: NetNode{ netLabel :\""+source+"\" })"
         "merge (n1)-[:CHILD_OF]->(n2)")
 
     #query = "match (n) where n.nLabel= \"" + source + "\" create (a:Node{nLabel:\"" +destination+"\" })-[:CHILD_OF]->(n)"
     #print(conn.query(query, db='neo4j'))
-"""
