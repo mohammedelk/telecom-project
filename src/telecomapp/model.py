@@ -13,11 +13,11 @@ class Model:
         return self.graph.nodes.match("NetNode", netLabel=net_label).first()
 
     def get_children(self, parent):
-        results = self.graph.run("MATCH (n)-[:CHILD_OF]->(node:NetNode {netLabel: \"" + parent + "\"}) RETURN n")
+        results = self.graph.run("MATCH (n)-[:CHILD_OF]->(node:NetNode {netLabel: \"" + str(parent) + "\"}) RETURN n")
         return results.data()
 
     def get_parent(self, child):
-        results = self.graph.run("MATCH (node:NetNode {netLabel: \"" + child + "\"})-[:CHILD_OF]->(n) RETURN n")
+        results = self.graph.run("MATCH (node:NetNode {netLabel: \"" + str(child) + "\"})-[:CHILD_OF]->(n) RETURN n")
         return results.data()
 
     def has_parent(self, node):
