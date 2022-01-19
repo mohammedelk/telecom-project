@@ -15,6 +15,8 @@ class Model:
 
     def get_children(self, parent):
         results = self.graph.run("MATCH (n)-[:CHILD_OF]->(node:NetNode {netLabel: \"" + str(parent) + "\"}) RETURN n")
+        if results is None:
+            return []
         return results.data()
 
     def get_parent(self, child):
@@ -27,6 +29,14 @@ class Model:
         else:
             return True
 
+
+    def has_children(self, node):
+        if len(self.get_parent(node)) == 0:
+            return False
+        else:
+            return True
+
+
     def get_a_node(self):
         l = self.graph.run("MATCH (n) RETURN n limit 1").data()
         return l[0]['n']
@@ -37,7 +47,7 @@ class Model:
 
 if __name__ == "__main__":
     m = Model("azeaze")
-    print(m.has_parent("FO"))
+    print(len(m.get_children("FO")))
 
 """
 url = os.getenv("NEO4J_URI", "bolt://localhost:7687")
