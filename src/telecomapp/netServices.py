@@ -1,5 +1,8 @@
+import json
+
 from src.telecomapp.model import Model
 import numpy as np
+
 
 
 class NetServices:
@@ -32,9 +35,9 @@ class NetServices:
 if __name__ == "__main__":
     m = Model("azeaze")
     nets = NetServices(m)
-    n = nets.model.get_net_node("FO")
+    n = nets.model.get_net_node("AGA001")
     root = nets.get_root_node(n['netLabel'])
     tree = nets.get_subtree(n,{},0,1)
 
 
-    print(tree)
+    print(json.dumps(tree))

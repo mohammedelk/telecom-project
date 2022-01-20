@@ -1,4 +1,5 @@
 # tuto flask : https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask-fr
+import json
 import logging
 import os
 from json import dumps
@@ -28,9 +29,10 @@ def get_index():
 def region():
     # if key doesn't exist, returns None
     region = request.args.get('region')
-    results = netServices.gen_json_tree(region)
-
-    return '''<h1>The language value is: {}</h1>'''.format(language)
+    n_region = model.get_net_node(region)
+    results = netServices.get_subtree(n_region,{},0,10)
+    j_results = json.dumps(results)
+    return j_results
 
 if __name__ == "__main__":
     logging.root.setLevel(logging.INFO)
