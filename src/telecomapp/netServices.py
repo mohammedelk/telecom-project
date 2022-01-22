@@ -4,7 +4,6 @@ from src.telecomapp.model import Model
 import numpy as np
 
 
-
 class NetServices:
     def __init__(self, model):
         self.model = model
@@ -22,6 +21,8 @@ class NetServices:
     def get_subtree(self, n_root, tree, deep, max_deep):
         # root : root node; tree : dict accumulative tree, deep firstly = 0, max_deep : maxx deep of tree
         tree['id'] = n_root['netLabel']
+        tree['name'] = n_root['netLabel']
+        tree['data'] = {}
         tree['children'] = []
         if max_deep > deep:
             l_child = self.model.get_children(n_root['netLabel'])
@@ -31,13 +32,25 @@ class NetServices:
                 self.get_subtree(n_chi, tree['children'][chi], deep + 1, max_deep)
         return tree
 
+    def get_subtree_city(self, father, city, deep, max_deep):
+        # father like "FO"; city like "NADOR" ,
+        subtree_city = {}
+        fa = self.model.get_net_node(father)
+        subtree_city['id'] = fa['netLabel']
+        subtree_city['name'] = fa['netLabel']
+        subtree_city['data'] = {}
+        subtree_city['children'] = []
+        list_subtree = self.model.get_list_subtree(father, city)
+        for node in list_subtree:
+            subtree_city['children'].append(self.get_subtree(node, {}, deep, max_deep))
+        return subtree_city
+
 
 if __name__ == "__main__":
     m = Model("azeaze")
     nets = NetServices(m)
     n = nets.model.get_net_node("AGA001")
     root = nets.get_root_node(n['netLabel'])
-    tree = nets.get_subtree(n,{},0,1)
-
+    tree = nets.get_subtree(n, {}, 0, 1)
 
     print(json.dumps(tree))

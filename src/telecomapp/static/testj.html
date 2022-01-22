@@ -1,8 +1,7 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Tree</title>
-  <style>
+      <style>
     html, body {
       height: 100%;
       margin: 0;
@@ -64,18 +63,51 @@
               border: 1px solid #6c6;
             }
   </style>
-  <script src='jquery.js'></script>
-  <script src='async.js'></script>
-  <script src='tree.js'></script>
-  <script src='data.js'></script>
-  <script>
-    $(function() {
+  <script src='/static/jquery.js'></script>
+  <script src='/static/async.js'></script>
+  <script src='/static/tree.js'></script>
+    <meta charset="UTF-8">
+    <title>Tree</title>
+    <script>
+    window.data={} ;
+function loadJSON() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     window.data = JSON.parse(this.response);
+      document.getElementById("demo").innerHTML =
+      datajson.name;
+
+
+
+
+
+
+
+
+
+
+
+    }
+  };
+  xhttp.open("GET", "/region", true);
+  xhttp.send();
+}
+</script>
+    <script>
+$(document).ready(function(){
+  $("button").click(function(){
+    alert(window.data.id);
+  });
+});
+</script>
+     <script>
+    $("button").click(function() {
       // Create a tree and initialise the root
-      var Data1 = JSON.parse('{{ Data | tojson | safe}}');
       window.tree = new Tree($('#tree'));
       tree.bind('node:add', function(node) {
         if(!node.parent)
-          node.data = Data1;
+          node.data = window.data;
         else {
           for(var i in node.parent.data.children) {
             if(node.parent.data.children[i].id == node.$label.text())
@@ -154,7 +186,13 @@
     });
   </script>
 </head>
+
 <body>
-  <div id='tree'></div>
+<div id='tree'></div>
+<div id="demo">
+<button type="button" onclick="loadJSON()">Change Content</button>
+</div>
+
+
 </body>
 </html>

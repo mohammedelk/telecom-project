@@ -41,13 +41,17 @@ class Model:
         l = self.graph.run("MATCH (n) RETURN n limit 1").data()
         return l[0]['n']
 
-
+    def get_list_subtree(self,father,city):
+        ci=city[0:3]
+        results = self.graph.run("MATCH (node1)-[:CHILD_OF]->(node2:NetNode {netLabel: \"" + str(father) + "\"}) where node1.netLabel STARTS WITH \"" + str(ci) + "\"  RETURN node1")
+        res = [node['node1'] for node in results.data()]
+        return res
 
 
 
 if __name__ == "__main__":
     m = Model("azeaze")
-    print(len(m.get_children("FO")))
+    print(m.get_list_subtree("FO","RABAT"))
 
 """
 url = os.getenv("NEO4J_URI", "bolt://localhost:7687")

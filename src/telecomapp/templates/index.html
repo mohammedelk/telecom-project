@@ -67,11 +67,14 @@
   <script src='jquery.js'></script>
   <script src='async.js'></script>
   <script src='tree.js'></script>
-  <script src='data.js'></script>
+    <script >  var Data1 = JSON.parse('{{ Data | safe}}');
+   document.getElementById('username').innerHTML = Data1.id + " " ;
+</script>
   <script>
+
+
     $(function() {
       // Create a tree and initialise the root
-      var Data1 = JSON.parse('{{ Data | tojson | safe}}');
       window.tree = new Tree($('#tree'));
       tree.bind('node:add', function(node) {
         if(!node.parent)
@@ -156,5 +159,6 @@
 </head>
 <body>
   <div id='tree'></div>
+<p>Hello, <span id="username"></span></p>
 </body>
 </html>
