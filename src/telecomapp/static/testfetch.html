@@ -72,6 +72,12 @@ label {
               border: 1px solid #6c6;
             }
   </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
   <script src='/static/jquery.js'></script>
   <script src='/static/async.js'></script>
   <script src='/static/tree.js'></script>
@@ -89,6 +95,7 @@ fetch ("/region?region="+x).then(function(res){
         })
         .then(function(value) {
       // Create a tree and initialise the root
+      $("#tree").empty();
       window.data = value
       window.tree = new Tree($('#tree'));
       tree.bind('node:add', function(node) {
@@ -179,13 +186,40 @@ fetch ("/region?region="+x).then(function(res){
 </head>
 
 <body>
-<label for="name">City:</label>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MW Topology Tool</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" aria-current="page" href="http://www.oddnet.com">ODDNET</a>
+      </div>
+    </div>
+  </div>
+</nav>
 
-<input type="text" id="name" name="name" required
-       minlength="4" maxlength="8" size="10">
+
+	<div class="row h-100">
+		<div class="col-1">
+		<label for="name">City:</label>
+
+        <input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10">
 
 <button type="button" onclick="loadJSON()">submit</button>
-<div id='tree'></div>
+		</div>
+		<div class="col-11">
+		<div id='tree'></div>
+
+
+		</div>
+
+
+	</div>
+
+
+
 
 </body>
 </html>

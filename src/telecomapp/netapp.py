@@ -36,7 +36,7 @@ def region():
     region = request.args.get('region')
     n_region = model.get_net_node("AGA001")
     results = netServices.get_subtree(n_region,{},0,1)
-    res = netServices.get_subtree_city("FO", region, 0, 5)
+    res = netServices.get_subtree_city("FO", region, 0, 12)
     j_res  = json.dumps(res)
     j_results = json.dumps(results)
     user = {'id': "Mr.", 'lastname': "My Father's Son"}
