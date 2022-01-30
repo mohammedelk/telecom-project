@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 # from .node import Node
+
 from node import Node
 
 
@@ -38,9 +39,10 @@ class Net:
         self.str_tree += " ] }"
 
 
-def csv_to_arr(csv_path):
-    df = pd.read_csv(csv_path)
-    arr_tree = df[['Site', 'Farend']].to_numpy()
+def csv_to_arr(csv_path, columns):
+    df = pd.read_csv(csv_path, sep=';')
+    #arr_tree = df[['Site', 'Farend']].to_numpy()
+    arr_tree = df[columns].to_numpy()
     return np.array(arr_tree)
 
 
