@@ -20,11 +20,7 @@ model = Model("azeaze")  # think if its a global var or not
 
 netServices = NetServices(model)  # think if its a global var or not
 
-arr = net.csv_to_arr('H:/workspace/python/telecom-project/data/BD Routage 30 10 2021.csv')
-my_net = net.Net(arr)
-my_net.gen_json(my_net.get_nodes()['AGA001'])
-msg = my_net.str_tree
-msg2="'"+msg+"'"
+
 @app.route("/")
 def get_index():
     return app.send_static_file("testfetch.html")
@@ -34,9 +30,10 @@ def get_index():
 def region():
     # if key doesn't exist, returns None
     region = request.args.get('region')
-    n_region = model.get_net_node("AGA001")
+    n_region = model.get_node("AGA001")
+    root = model.get_node("FO")
     results = netServices.get_subtree(n_region,{},0,1)
-    res = netServices.get_subtree_city("FO", region, 0, 12)
+    res = netServices.get_subtree_city(root, region, 12)
     j_res  = json.dumps(res)
     j_results = json.dumps(results)
     user = {'id': "Mr.", 'lastname': "My Father's Son"}

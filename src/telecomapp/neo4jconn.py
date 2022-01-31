@@ -59,8 +59,8 @@ def create_db_conn_csv(csv_path, conn):
 
 if __name__ == "__main__":
     conn = Neo4jConnection("bolt://localhost:7687", "neo4j", "azeaze")
-    #create_db_from_csv('H:/workspace/python/telecom-project/data/BD Routage 30 10 2021.csv', conn)
-    #print("db created")
+    create_db_from_csv('H:/workspace/python/telecom-project/data/BD Routage 30 10 2021.csv', conn)
+    print("db created")
     create_db_conn_csv('H:/workspace/python/telecom-project/data/dataDashboard.csv', conn)
     print("db connextion created")
     #query = '''match (n) where n.nLabel='PY001' return id(n)'''
