@@ -38,7 +38,7 @@ def region():
     j_results = json.dumps(results)
     user = {'id': "Mr.", 'lastname': "My Father's Son"}
 
-    return Response(j_res,mimetype="application/json")
+    return Response(j_res, mimetype="application/json")
 
 if __name__ == "__main__":
     logging.root.setLevel(logging.INFO)

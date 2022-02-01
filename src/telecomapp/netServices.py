@@ -9,6 +9,7 @@ class NetServices:
         self.model = model
         self.subtree = {}
 
+    # return the root tree of a node
     def get_root_node(self, node):
         if len(self.model.graph.nodes) == 0:
             return None
@@ -43,12 +44,17 @@ class NetServices:
         return subtree_city
 
 
+
+
+# just for testing
 if __name__ == "__main__":
     m = Model("azeaze")
     nets = NetServices(m)
+
     n = nets.model.get_node("FO")
-    #root = nets.get_root_node(n['netLabel'])
-    #tree = nets.get_subtree(n, {}, 0,1)
-    tree2 = nets.get_subtree_city(n, "AGADIR", 2)
-    #print(nets.get_root_node(nets.model.get_node("AGA001")))
-    print(json.dumps(tree2))
+
+    # root = nets.get_root_node(n['netLabel'])
+    # tree = nets.get_subtree(n, {}, 0,1)
+    #tree2 = nets.get_subtree_city(n, "AGADIR", 2)
+    # print(nets.get_root_node(nets.model.get_node("AGA001")))
+    #print(json.dumps(tree2))

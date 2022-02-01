@@ -41,6 +41,19 @@ class Model:
         else:
             return True
 
+    """return list of parents of node, nodes : accumulative, firstly = []"""
+    def get_parents(self, node, nodes):
+        if self.has_parent(node):
+            parent = self.get_parent(node)[0]
+            nodes.append(parent)
+            return self.get_parents(parent, nodes)
+        return nodes
+
+    def set_dependency(self):
+        for n in np.arange(0, len(self.graph.nodes)):
+            node=self.graph.nodes.get(n)
+            node['Dependency'] = len(self.get_parents(node, []))
+            self.graph.push(node)
 
     def has_children(self, node):
         if len(self.get_parent(node)) == 0:
@@ -63,17 +76,61 @@ class Model:
         return res
 
 
-
+# just for testing
 if __name__ == "__main__":
     m = Model("azeaze")
+    n = m.get_node("FO")
+    #nn = m.graph.nodes
+    #print(m.graph.nodes.get(0))
     #print(m.get_list_subtree("FO","RABAT"))
     #print(m.get_children(m.get_net_node("FO")))
-    print(m.get_parent(m.get_node("AGA001")))
-    print(m.get_node("AGA001"))
+    #print(m.get_parent(m.get_node("AGA001")))
+    #print(m.get_node("AGA001"))
+    #print(m.get_parents(n, []))
+    m.set_dependency()
+    #n['Dependency'] = 1
+    #m.graph.push(m.graph.)
+    #print(n['Dependency'])
 """
+py2neo :  https://py2neo.org/v4/data.html#py2neo.data.walk
+
 url = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 username = os.getenv("NEO4J_USER", "neo4j")
 password = os.getenv("NEO4J_PASSWORD", "azeaze")
 neo4j_version = os.getenv("NEO4J_VERSION", "4")
 database = os.getenv("NEO4J_DATABASE", "neo4j")
+
+from py2neo import Graph, Node, Relationship
+
+uri = "bolt://localhost:7687"
+user = "neo4j"
+password = "..."
+
+g = Graph(uri=uri, user=user, password=password)
+
+# optionally clear the graph
+# g.delete_all()
+
+print(len(g.nodes))
+print(len(g.relationships))
+
+# begin a transaction
+tx = g.begin()
+
+# define some nodes and relationships
+a = Node("Person", name="Alice")
+b = Node("Person", name="Bob")
+ab = Relationship(a, "KNOWS", b)
+
+# create the nodes and relationships
+tx.create(a)
+tx.create(b)
+tx.create(ab)
+
+# commit the transaction
+tx.commit()
+
+print(g.exists(ab))
+print(len(g.nodes))
+print(len(g.relationships))
 """
