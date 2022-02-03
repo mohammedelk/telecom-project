@@ -25,6 +25,13 @@
 </style>
 <body>
 <script src="//d3js.org/d3.v3.min.js"></script>
+<div>
+		<label for="name">City:</label>
+
+        <input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10">
+
+          <button type="button" onclick="loadJSON()">submit</button>
+		</div>
 <script>
 
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
@@ -72,6 +79,14 @@ d3.json("/region?region="+x, function(error, flare) {
 
 d3.select(self.frameElement).style("height", "800px");
 
+var tooltip = d3.select("body")
+  .append("div")
+  .attr('class', 'tooltipdiv')
+  .style("position", "absolute")
+  .style("z-index", "10")
+  .style("visibility", "hidden")
+  .text("a simple tooltip");
+
 function update(source) {
 
   // Compute the new tree layout.
@@ -83,11 +98,7 @@ function update(source) {
 
   // Update the nodes…
   var node = svg.selectAll("g.node")
-      .data(nodes, function(d) { return d.id || (d.id = ++i); })
-      .on("mouseover", function(){
-           d3.select(this)
-           .text(function(d) { return d.id; });
-        });
+      .data(nodes, function(d) { return d.id || (d.id = ++i); });
 
   // Enter any new nodes at the parent's previous position.
   var nodeEnter = node.enter().append("g")
@@ -98,6 +109,22 @@ function update(source) {
   nodeEnter.append("circle")
       .attr("r", 1e-6)
       .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+//to show node data
+  node.on("mouseover", function(d) {
+                return tooltip.style("visibility", "visible")
+                .text("Vendor : " + d.Vendor + "\n NE Type : "+d.NE_Type + "\n Dependency : "+d.Dependency);
+                 })
+                 .on("mousemove", function() {
+                        return tooltip.style("top",
+                        (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
+                        })
+                .on("mouseout", function() {
+                        return tooltip.style("visibility", "hidden");
+                         });
+
+
+
 
   nodeEnter.append("text")
       .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
@@ -118,6 +145,8 @@ function update(source) {
   nodeUpdate.select("text")
       .style("fill-opacity", 1);
 
+
+
   // Transition exiting nodes to the parent's new position.
   var nodeExit = node.exit().transition()
       .duration(duration)
@@ -133,6 +162,19 @@ function update(source) {
   // Update the links…
   var link = svg.selectAll("path.link")
       .data(links, function(d) { return d.target.id; });
+
+      //to show data link
+    link.on("mouseover", function(d) {
+                return tooltip.style("visibility", "visible")
+                .text("link")
+                 })
+                 .on("mousemove", function() {
+                        return tooltip.style("top",
+                        (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
+                        })
+                .on("mouseout", function() {
+                        return tooltip.style("visibility", "hidden");
+                         });
 
   // Enter any new links at the parent's previous position.
   link.enter().insert("path", "g")
@@ -176,12 +218,6 @@ function click(d) {
 }
 
 </script>
-<div>
-		<label for="name">City:</label>
 
-        <input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10">
-
-          <button type="button" onclick="loadJSON()">submit</button>
-		</div>
 
 </body>

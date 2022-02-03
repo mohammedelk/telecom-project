@@ -24,7 +24,9 @@ class NetServices:
         # root : root node; tree : dict accumulative tree, deep firstly = 0, max_deep : max deep of tree
         tree['id'] = n_root['netLabel']
         tree['name'] = n_root['netLabel']
-        tree['data'] = {}
+        tree['Vendor'] = n_root['Vendor']
+        tree['NE_Type'] = n_root['NE_Type']
+        tree['Dependency'] = n_root['Dependency']
         tree['children'] = []
         if max_deep > deep:
             l_child = self.model.get_children(n_root)
@@ -37,7 +39,7 @@ class NetServices:
     """ return a tree as a DICT of all nodes with specific city having father as parent """
     def get_subtree_city(self, father, city, max_deep):
         # father : node; city like "NADOR"
-        subtree_city = {'id': father['netLabel'], 'name': father['netLabel'], 'data': {}, 'children': []}
+        subtree_city = {'id': father['netLabel'], 'name': father['netLabel'], 'children': []}
         list_subtree = self.model.get_list_subtree(father, city)
         for node in list_subtree:
             subtree_city['children'].append(self.get_subtree(node, {}, 0, max_deep))
