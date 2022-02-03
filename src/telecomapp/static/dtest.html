@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Tree</title>
+    <script src="https://d3js.org/d3.v7.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+
+function loadJSON() {
+var x = document.getElementById("name").value;
+d3.json ("/region?region="+x).then( function(data) {
+
+        return data;
+
+}).then(function (data) {alert(data['id'])})
+
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+
+		<div>
+		<label for="name">City:</label>
+
+        <input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10">
+
+          <button type="button" onclick="loadJSON()">submit</button>
+		</div>
+
+        <svg id="myPlot" style="width:1000px;height:1000px"></svg>
+
+
+
+
+
+
+</body>
+</html>

@@ -52,9 +52,10 @@ if __name__ == "__main__":
     nets = NetServices(m)
 
     n = nets.model.get_node("FO")
-
+    res = nets.get_subtree_city(n, "TAZA", 12)
     # root = nets.get_root_node(n['netLabel'])
     # tree = nets.get_subtree(n, {}, 0,1)
     #tree2 = nets.get_subtree_city(n, "AGADIR", 2)
     # print(nets.get_root_node(nets.model.get_node("AGA001")))
     #print(json.dumps(tree2))
+    #print(json.dumps(res))

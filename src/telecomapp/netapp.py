@@ -23,22 +23,22 @@ netServices = NetServices(model)  # think if its a global var or not
 
 @app.route("/")
 def get_index():
-    return app.send_static_file("testfetch.html")
+    return app.send_static_file("treed3.html")
 
 
 @app.route('/region')
 def region():
     # if key doesn't exist, returns None
     region = request.args.get('region')
-    n_region = model.get_node("AGA001")
+    #n_region = model.get_node("AGA001")
     root = model.get_node("FO")
-    results = netServices.get_subtree(n_region,{},0,1)
-    res = netServices.get_subtree_city(root, region, 12)
-    j_res  = json.dumps(res)
-    j_results = json.dumps(results)
-    user = {'id': "Mr.", 'lastname': "My Father's Son"}
+    #results = netServices.get_subtree(n_region,{},0,1)
+    res = netServices.get_subtree_city(root, region, 20)
+    js_res = json.dumps(res)
+    #j_results = json.dumps(results)
+    #user = {'id': "Mr.", 'lastname': "My Father's Son"}
 
-    return Response(j_res, mimetype="application/json")
+    return Response(js_res, mimetype="application/json")
 
 if __name__ == "__main__":
     logging.root.setLevel(logging.INFO)
