@@ -108,7 +108,7 @@ function update(source) {
 
   nodeEnter.append("circle")
       .attr("r", 1e-6)
-      .style("fill", function(d) { return (d._children!=[]) ? "lightsteelblue" : "#fff"; });
+      .style("fill", function(d) { return d.children ? "lightsteelblue" : "#fff"; });
 
 //to show node data
   node.on("mouseover", function(d) {
@@ -129,7 +129,7 @@ function update(source) {
   nodeEnter.append("text")
       .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
       .attr("dy", ".35em")
-      .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+      .attr("text-anchor", function(d) { return d.children || d._children  ? "end" : "start"; })
       .text(function(d) { return d.name; })
       .style("fill-opacity", 1e-6);
 
@@ -140,7 +140,7 @@ function update(source) {
 
   nodeUpdate.select("circle")
       .attr("r", 4.5)
-      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+      .style("fill", function(d) { return d._children  ? "lightsteelblue" : "#fff"; });
 
   nodeUpdate.select("text")
       .style("fill-opacity", 1);
@@ -166,7 +166,7 @@ function update(source) {
       //to show link data
     link.on("mouseover", function(d) {
                 return tooltip.style("visibility", "visible")
-                .text(d.target.id)
+                .text(d.target.Modulation)
                  })
                  .on("mousemove", function() {
                         return tooltip.style("top",

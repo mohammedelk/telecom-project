@@ -15,6 +15,16 @@ class Model:
     def get_node(self, net_label):
         return self.graph.nodes.match("NetNode", netLabel=net_label).first()
 
+    """ return list of relationship of two nodes supposed one """
+    def get_relationship(self,parent, child):
+        par = parent['netLabel']
+        chil = child['netLabel']
+        results = self.graph.run("MATCH (node1:NetNode {netLabel: \"" + str(chil) + "\"})-[r:CHILD_OF]->(node2:NetNode {netLabel: \"" + str(par) + "\"}) RETURN r")
+        if results is None:
+            return np.array([])
+        res = np.array([r['r'] for r in results.data()])
+        return res
+
     """return an np array of childrens of a node"""
     def get_children(self, parent):
         # parent : node
@@ -80,6 +90,7 @@ class Model:
 if __name__ == "__main__":
     m = Model("azeaze")
     n = m.get_node("FO")
+    ag = m.get_node("AGA001")
     #nn = m.graph.nodes
     #print(m.graph.nodes.get(0))
     #print(m.get_list_subtree("FO","RABAT"))
@@ -87,10 +98,11 @@ if __name__ == "__main__":
     #print(m.get_parent(m.get_node("AGA001")))
     #print(m.get_node("AGA001"))
     #print(m.get_parents(n, []))
-    m.set_dependency()
+    #m.set_dependency()
     #n['Dependency'] = 1
     #m.graph.push(m.graph.)
     #print(n['Dependency'])
+    print(m.get_relationship(n, ag))
 """
 py2neo :  https://py2neo.org/v4/data.html#py2neo.data.walk
 

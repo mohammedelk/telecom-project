@@ -21,7 +21,7 @@ class NetServices:
 
     """ recursive fun return a tree as a dict with a root node and a max deep"""
     def get_subtree(self, n_root, tree, deep, max_deep):
-        # root : root node; tree : dict accumulative tree, deep firstly = 0, max_deep : max deep of tree
+        # root : root node; tree : dict accumulative tree, firstly = {}, deep firstly = 0, max_deep : max deep of tree
         tree['id'] = n_root['netLabel']
         tree['name'] = n_root['netLabel']
         tree['Vendor'] = n_root['Vendor']
@@ -32,6 +32,16 @@ class NetServices:
             l_child = self.model.get_children(n_root)
             for it in np.arange(0, len(l_child)):
                 n_chi = l_child[it]
+                conn = self.model.get_relationship(n_root, n_chi)
+                if not np.array_equal(conn, []):
+                    tree['Protection'] = conn[0]['Protection']
+                    tree['Modulation'] = conn[0]['Modulation']
+                    tree['Freq_min'] = conn[0]['Freq_min']
+                    tree['Freq_max'] = conn[0]['Freq_max']
+                    tree['Channels'] = conn[0]['Channels']
+                    tree['Capacity'] = conn[0]['Capacity']
+                    tree['Bandwidth'] = conn[0]['Bandwidth']
+                    tree['Band'] = conn[0]['Band']
                 tree['children'].append({})
                 self.get_subtree(n_chi, tree['children'][it], deep + 1, max_deep)
         return tree
@@ -60,4 +70,4 @@ if __name__ == "__main__":
     #tree2 = nets.get_subtree_city(n, "AGADIR", 2)
     # print(nets.get_root_node(nets.model.get_node("AGA001")))
     #print(json.dumps(tree2))
-    #print(json.dumps(res))
+    print(json.dumps(res))
