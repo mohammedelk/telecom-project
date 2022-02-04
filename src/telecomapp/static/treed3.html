@@ -85,6 +85,7 @@ var tooltip = d3.select("body")
   .style("position", "absolute")
   .style("z-index", "10")
   .style("visibility", "hidden")
+  .style("white-space", "pre-line")
   .text("a simple tooltip");
 
 function update(source) {
@@ -107,7 +108,7 @@ function update(source) {
       .on("click", click);
 
   nodeEnter.append("circle")
-      .attr("r", 1e-6)
+      .attr("r",1e-6)
       .style("fill", function(d) { return d.children ? "lightsteelblue" : "#fff"; });
 
 //to show node data
@@ -122,8 +123,6 @@ function update(source) {
                 .on("mouseout", function() {
                         return tooltip.style("visibility", "hidden");
                          });
-
-
 
 
   nodeEnter.append("text")
@@ -146,7 +145,6 @@ function update(source) {
       .style("fill-opacity", 1);
 
 
-
   // Transition exiting nodes to the parent's new position.
   var nodeExit = node.exit().transition()
       .duration(duration)
@@ -163,11 +161,15 @@ function update(source) {
   var link = svg.selectAll("path.link")
       .data(links, function(d) { return d.target.id; }); //return d.target.id
 
-      //to show link data
-    link.on("mouseover", function(d) {
-                return tooltip.style("visibility", "visible")
-                .text(d.target.Modulation)
-                 })
+
+  //to show link data
+  link.on("mouseover", function(d) {
+             return tooltip.style("visibility", "visible")
+             .text("Capacity : "+d.target.Capacity+" \nModulation : "+d.target.Modulation+
+             " \n Protection : "+d.target.Protection+" \n Channels : "+d.target.Channels+
+             " \n Frequency : (Min)"+d.target.Freq_min+" (Max)"+d.target.Freq_max+
+             " \n Band : "+d.target.Band+" \n Bandwidth : "+d.target.Bandwidth)
+             })
                  .on("mousemove", function() {
                         return tooltip.style("top",
                         (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
@@ -198,7 +200,7 @@ function update(source) {
       })
       .remove();
 
-  // Stash the old positions for transition.
+  // Stash the old positions for transition
   nodes.forEach(function(d) {
     d.x0 = d.x;
     d.y0 = d.y;
