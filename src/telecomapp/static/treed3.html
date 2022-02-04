@@ -108,7 +108,7 @@ function update(source) {
 
   nodeEnter.append("circle")
       .attr("r", 1e-6)
-      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+      .style("fill", function(d) { return (d._children!=[]) ? "lightsteelblue" : "#fff"; });
 
 //to show node data
   node.on("mouseover", function(d) {
@@ -161,12 +161,12 @@ function update(source) {
 
   // Update the links…
   var link = svg.selectAll("path.link")
-      .data(links, function(d) { return d.target.id; });
+      .data(links, function(d) { return d.target.id; }); //return d.target.id
 
-      //to show data link
+      //to show link data
     link.on("mouseover", function(d) {
                 return tooltip.style("visibility", "visible")
-                .text("link")
+                .text(d.target.id)
                  })
                  .on("mousemove", function() {
                         return tooltip.style("top",
